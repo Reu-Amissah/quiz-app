@@ -1,0 +1,165 @@
+@use "fonts";
+
+:root {
+  --purple: #a729f5;
+  --main-text: #313e51;
+  --secondary-text: #626c7f;
+  --secondary-background: #f4f6fa;
+  --main-bg: #fff;
+  --green: #26d782;
+  --red: #ee5454;
+  --box-shadow: rgba(143, 160, 193, 0.14);
+}
+.dark-theme {
+  --purple: #a729f5;
+  // --main-text: #313e51;
+  --main-bg: #3b4d66;
+  --secondary-text: #abc1e1;
+  --secondary-background: #f4f6fa;
+  --main-text: #fff;
+  --green: #26d782;
+  --red: #ee5454;
+  --box-shadow: rgba(49, 62, 81, 0.7);
+}
+* {
+  font-family: fonts.$main-font;
+  margin: 0;
+  padding: 0;
+}
+
+// global body style and settings
+body {
+  background-image: url(../assets/images/pattern-background-desktop-light.svg);
+  background-color: var(--main-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100dvw;
+  display: flex;
+  justify-content: center;
+  transition: all;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
+// global body style and settings
+
+// dark mode toggle component here
+.parent-component {
+  width: 80%;
+  margin-top: 100px;
+  .mode-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 16px;
+    .mode-icons {
+      width: 24px;
+      height: 24px;
+    }
+    .dark-toggle-container {
+      padding: 4px;
+      background: var(--purple);
+      width: 40px;
+      border-radius: 999px;
+      display: flex;
+
+      .dark-toggle-button {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: white;
+      }
+    }
+  }
+}
+// dark mode component ends here
+
+// body component begins here
+.landing-body {
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-between;
+  .side-header {
+    color: var(--main-text);
+    .big-font-light {
+      font-size: 64px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 100%;
+    }
+    .big-font-bold {
+      font-size: 64px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 100%;
+    }
+    .small-font-italics {
+      color: var(--secondary-text);
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 150%;
+      padding-top: 48px;
+    }
+  }
+  .side-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    .categories {
+      width: 564px;
+      background-color: var(--main-bg);
+      color: var(--main-text);
+      display: flex;
+      gap: 34px;
+      align-items: center;
+      padding: 20px;
+      border-radius: 24px;
+      box-shadow: 0px 16px 40px 0px var(--box-shadow);
+      border: 2px solid transparent;
+      transition: all;
+      transition-duration: 150ms;
+      transition-timing-function: ease-in-out;
+
+      &:hover {
+        border: 2px solid var(--purple);
+        cursor: pointer;
+      }
+      .landing-icons1 {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        background-color: #fff1e9;
+        border-radius: 10px;
+      }
+      .categories-titles {
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 100%;
+      }
+    }
+    .categories .landing-icons2 {
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+      background-color: #e0fdef;
+      border-radius: 10px;
+    }
+    .categories .landing-icons3 {
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+      background-color: #ebf0ff;
+      border-radius: 10px;
+    }
+    .categories .landing-icons4 {
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+      background-color: #f6e7ff;
+      border-radius: 10px;
+    }
+  }
+}
+// body component ends here
