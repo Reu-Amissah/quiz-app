@@ -149,23 +149,30 @@ async function fetchData() {
 
   return filteredCategoryQuestions;
 }
+let button = document.getElementById("main-button");
+button?.addEventListener("click", showNextQuestion);
+
+function showNextQuestion() {
+  currentIndexQuestion = currentIndexQuestion + 1;
+}
+
+function showQuestion(questions: Quiz) {
+  questionBody!.innerHTML = questions.questions[currentIndexQuestion].question;
+  console.log(questionBody?.innerHTML);
+}
+
+function startQuiz() {
+  currentIndexQuestion = 4;
+  score = 0;
+  showQuestion(filteredCategoryQuestions);
+  console.log("success");
+}
 
 fetchData().then(() => {
   console.log(filteredCategoryQuestions);
-  function startQuiz() {
-    currentIndexQuestion = 0;
-    score = 0;
-    showQuestion(filteredCategoryQuestions);
-    console.log("success");
-  }
-  function showQuestion(questions: Quiz) {
-    questionBody!.innerHTML = questions.questions[0].question;
-    console.log(questionBody?.innerHTML);
-  }
-
-  let questionsCategorySelector = document.getElementById("category-selector");
-  questionsCategorySelector?.addEventListener("click", startQuiz);
+  startQuiz();
 });
+// question loading function going on above
 
 let questionBody = document.getElementById("question");
 interface Quiz {
@@ -182,10 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("hi");
   let button = document.getElementById("button");
   button?.addEventListener("click", showNextQuestion);
-
-  function showNextQuestion() {
-    currentIndexQuestion = currentIndexQuestion + 1;
-  }
 
   // let levelNum = 100;
   // levelNum += 20;

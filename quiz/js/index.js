@@ -132,29 +132,31 @@ function fetchData() {
         return filteredCategoryQuestions;
     });
 }
+let button = document.getElementById("main-button");
+button === null || button === void 0 ? void 0 : button.addEventListener("click", showNextQuestion);
+function showNextQuestion() {
+    currentIndexQuestion = currentIndexQuestion + 1;
+}
+function showQuestion(questions) {
+    questionBody.innerHTML = questions.questions[currentIndexQuestion].question;
+    console.log(questionBody === null || questionBody === void 0 ? void 0 : questionBody.innerHTML);
+}
+function startQuiz() {
+    currentIndexQuestion = 4;
+    score = 0;
+    showQuestion(filteredCategoryQuestions);
+    console.log("success");
+}
 fetchData().then(() => {
     console.log(filteredCategoryQuestions);
-    function startQuiz() {
-        currentIndexQuestion = 0;
-        score = 0;
-        showQuestion(filteredCategoryQuestions);
-        console.log("success");
-    }
-    function showQuestion(questions) {
-        questionBody.innerHTML = questions.questions[0].question;
-        console.log(questionBody === null || questionBody === void 0 ? void 0 : questionBody.innerHTML);
-    }
-    let questionsCategorySelector = document.getElementById("category-selector");
-    questionsCategorySelector === null || questionsCategorySelector === void 0 ? void 0 : questionsCategorySelector.addEventListener("click", startQuiz);
+    startQuiz();
 });
+// question loading function going on above
 let questionBody = document.getElementById("question");
 document.addEventListener("DOMContentLoaded", () => {
     console.log("hi");
     let button = document.getElementById("button");
     button === null || button === void 0 ? void 0 : button.addEventListener("click", showNextQuestion);
-    function showNextQuestion() {
-        currentIndexQuestion = currentIndexQuestion + 1;
-    }
     // let levelNum = 100;
     // levelNum += 20;
     // let levelWidth: string = levelNum + "%";
