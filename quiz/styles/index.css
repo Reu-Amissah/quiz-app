@@ -2,8 +2,8 @@
   --purple: #a729f5;
   --main-text: #313e51;
   --secondary-text: #626c7f;
-  --secondary-background: #f4f6fa;
-  --main-bg: #fff;
+  --secondary-background: #fff;
+  --main-bg: #f4f6fa;
   --green: #26d782;
   --red: #ee5454;
   --box-shadow: rgba(143, 160, 193, 0.14);
@@ -11,13 +11,13 @@
 
 .dark-theme {
   --purple: #a729f5;
-  --main-bg: #3b4d66;
+  --main-bg: #313e51;
   --secondary-text: #abc1e1;
-  --secondary-background: #f4f6fa;
+  --secondary-background: #3b4d66;
   --main-text: #fff;
   --green: #26d782;
   --red: #ee5454;
-  --box-shadow: rgba(49, 62, 81, 0.7);
+  --box-shadow: rgba(49, 62, 81, 0.14);
 }
 
 * {
@@ -108,7 +108,7 @@ body {
 }
 .landing-body .side-categories .categories {
   width: 564px;
-  background-color: var(--main-bg);
+  background-color: var(--secondary-background);
   color: var(--main-text);
   display: flex;
   gap: 34px;
@@ -116,13 +116,13 @@ body {
   padding: 20px;
   border-radius: 24px;
   box-shadow: 0px 16px 40px 0px var(--box-shadow);
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   transition: all;
   transition-duration: 150ms;
   transition-timing-function: ease-in-out;
 }
 .landing-body .side-categories .categories:hover {
-  border: 2px solid var(--purple);
+  border: 3px solid var(--purple);
   cursor: pointer;
 }
 .landing-body .side-categories .categories .landing-icons1 {

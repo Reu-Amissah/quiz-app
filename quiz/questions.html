@@ -17,28 +17,74 @@
       href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="stylesheet" href="./styles/questions.css" />
     <title>Quiz app</title>
   </head>
   <body>
     <div class="parent-component">
       <!-- dark mode toggle button declared here -->
-      <div class="mode-container" id="dark-mode">
-        <img
-          src="./assets/images/icon-sun-dark.svg"
-          class="mode-icons"
-          id="sun"
-        />
-        <div id="dark-icon-container" class="dark-toggle-container">
-          <div class="dark-toggle-button"></div>
+      <div class="question-header-container">
+        <div id="question-category-header">
+          <img
+            src="./assets/images/icon-html.svg"
+            class="landing-icons"
+            id="question-header-icon"
+          />
+          <p class="categories-title">HTML</p>
         </div>
-        <img
-          src="./assets/images/icon-moon-dark.svg"
-          class="mode-icons"
-          id="moon"
-        />
+
+        <div class="mode-container" id="dark-mode">
+          <img
+            src="./assets/images/icon-sun-dark.svg"
+            class="mode-icons"
+            id="sun"
+          />
+          <div id="dark-icon-container" class="dark-toggle-container">
+            <div class="dark-toggle-button"></div>
+          </div>
+          <img
+            src="./assets/images/icon-moon-dark.svg"
+            class="mode-icons"
+            id="moon"
+          />
+        </div>
       </div>
       <!-- dark mode toggle button exits here -->
+
+      <!-- question with options begin here  -->
+      <div class="question-main-body">
+        <div class="question-container">
+          <div class="question-text-container">
+            <p class="question-number">Question 6 of 10</p>
+            <p class="question-body" id="question">
+              Which of these color contrast ratios defines the minimum WCAG 2.1
+              Level AA requirement for normal text?
+            </p>
+          </div>
+          <div class="question-level-container">
+            <span class="level-indicator"></span>
+          </div>
+        </div>
+        <div class="side-categories">
+          <div class="categories">
+            <span class="letter-options">A</span>
+            <p class="categories-titles">HTML</p>
+          </div>
+          <div class="categories">
+            <span class="letter-options">B</span>
+            <p class="categories-titles">CSS</p>
+          </div>
+          <div class="categories">
+            <span class="letter-options">C</span>
+            <p class="categories-titles">Javascript</p>
+          </div>
+          <div class="categories">
+            <span class="letter-options">D</span>
+            <p class="categories-titles">Accessibility</p>
+          </div>
+        </div>
+        <button id="main-button">Submit</button>
+      </div>
     </div>
 
     <script src="./js/index.js"></script>
