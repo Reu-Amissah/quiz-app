@@ -115,14 +115,11 @@ document.querySelectorAll(".category-link").forEach((link) => {
   });
 });
 
-let score = 0;
-let currentIndexQuestion = 0;
-
-let filteredCategoryQuestions: Quiz;
 // localStorage.setItem("currentIndexQuestion", "0");
 // let currentIndexQuestion: string | number | null =
 //   localStorage.getItem("currentIndexQuestion") | 0;
 
+let filteredCategoryQuestions: Quiz;
 async function fetchData() {
   const response = await fetch("./js/data.json");
   const data = await response.json();
@@ -149,20 +146,103 @@ async function fetchData() {
 
   return filteredCategoryQuestions;
 }
+
+let score = 0;
+let currentIndexQuestion = 0;
 let button = document.getElementById("main-button");
-button?.addEventListener("click", showNextQuestion);
+
+let questionBody = document.getElementById("question");
+let questionNum = document.getElementById("question-num");
+let questionOptns = document.getElementById("optn");
+
+let isAnswerSelect = false;
 
 function showNextQuestion() {
+  if (!isAnswerSelect) {
+    const questionP = document.createElement("p");
+    questionP.innerHTML = "Please select an answer";
+    questionBody?.appendChild(questionP);
+    return;
+  }
+
   currentIndexQuestion = currentIndexQuestion + 1;
+
+  if (currentIndexQuestion < filteredCategoryQuestions.questions.length) {
+    showQuestion(filteredCategoryQuestions);
+    isAnswerSelect = false;
+  } else {
+    console.log(score);
+  }
+}
+
+function resetState() {
+  while (questionOptns?.firstChild) {
+    questionOptns.removeChild(questionOptns.firstChild);
+  }
 }
 
 function showQuestion(questions: Quiz) {
-  questionBody!.innerHTML = questions.questions[currentIndexQuestion].question;
-  console.log(questionBody?.innerHTML);
+  resetState();
+  let currentQuestion = questions.questions[currentIndexQuestion];
+  questionBody!.innerHTML = currentQuestion.question;
+  questionNum!.innerHTML = `Question ${currentIndexQuestion + 1} of 10`;
+
+  currentQuestion.options.forEach((option) => {
+    const correctAnswer = currentQuestion.answer;
+    const correctState: boolean = correctAnswer == option;
+    console.log(correctAnswer, option, correctState);
+
+    const categoryDiv = document.createElement("div");
+    categoryDiv.classList.add("question-content");
+
+    const letterSpan = document.createElement("span");
+    letterSpan.classList.add("letter-options");
+    letterSpan.textContent = String.fromCharCode(65 + currentIndexQuestion); // ASCII 65 is 'A'
+    categoryDiv.appendChild(letterSpan);
+
+    const questionP = document.createElement("p");
+    questionP.classList.add("question-options");
+    questionP.textContent = option;
+    categoryDiv.appendChild(questionP);
+
+    questionOptns!.appendChild(categoryDiv);
+
+    if (correctState) {
+      categoryDiv.dataset.correct = "true";
+    }
+    categoryDiv.addEventListener("click", selectAnswer);
+  });
+}
+
+function selectAnswer(e: Event) {
+  isAnswerSelect = true;
+  const selectedButton = (e.target as HTMLElement).closest(
+    ".question-content"
+  ) as HTMLElement;
+  console.log(selectedButton);
+
+  const isCorrect = selectedButton!.dataset.correct === "true";
+  console.log(isCorrect);
+
+  if (isCorrect) {
+    // selectedButton!.classList.add("correct");
+    selectedButton.style.border = "3px solid #26d782";
+    score = score + 1;
+    console.log(score);
+  } else {
+    selectedButton.style.border = "3px solid #ee5454";
+  }
+
+  Array.from(questionOptns!.children).forEach((option) => {
+    if (option instanceof HTMLElement && option.dataset.correct === "true") {
+      option.style.border = "3px solid #26d782";
+    }
+    option.removeEventListener("click", selectAnswer);
+  });
 }
 
 function startQuiz() {
-  currentIndexQuestion = 4;
+  currentIndexQuestion = 0;
   score = 0;
   showQuestion(filteredCategoryQuestions);
   console.log("success");
@@ -171,10 +251,10 @@ function startQuiz() {
 fetchData().then(() => {
   console.log(filteredCategoryQuestions);
   startQuiz();
+  button?.addEventListener("click", showNextQuestion);
 });
 // question loading function going on above
 
-let questionBody = document.getElementById("question");
 interface Quiz {
   title: string;
   icon: string;
@@ -184,15 +264,3 @@ interface Quiz {
     answer: string;
   }>;
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("hi");
-  let button = document.getElementById("button");
-  button?.addEventListener("click", showNextQuestion);
-
-  // let levelNum = 100;
-  // levelNum += 20;
-  // let levelWidth: string = levelNum + "%";
-  // (document.querySelector(".level-indicator") as HTMLElement).style.width =
-  //   levelWidth;
-});
