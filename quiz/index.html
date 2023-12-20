@@ -25,14 +25,23 @@
     <div class="parent-component">
       <!-- dark mode toggle button declared here -->
       <div class="mode-container" id="dark-mode">
-        <img src="./assets/images/icon-sun-dark.svg" class="mode-icons" />
+        <img
+          src="./assets/images/icon-sun-dark.svg"
+          class="mode-icons"
+          id="sun"
+        />
         <div id="dark-icon-container" class="dark-toggle-container">
           <div class="dark-toggle-button"></div>
         </div>
-        <img src="./assets/images/icon-moon-dark.svg" class="mode-icons" />
+        <img
+          src="./assets/images/icon-moon-dark.svg"
+          class="mode-icons"
+          id="moon"
+        />
       </div>
       <!-- dark mode toggle button exits here -->
 
+      <!-- category selection portion goes here  -->
       <div class="landing-body">
         <div class="side-header">
           <p class="big-font-light">Welcome to the</p>
@@ -40,27 +49,36 @@
           <p class="small-font-italics">Pick a subject to get started.</p>
         </div>
         <div class="side-categories">
-          <div class="categories">
-            <img src="./assets/images/icon-html.svg" class="landing-icons1" />
-            <p class="categories-titles">HTML</p>
-          </div>
-          <div class="categories">
-            <img src="./assets/images/icon-css.svg" class="landing-icons2" />
-            <p class="categories-titles">CSS</p>
-          </div>
-          <div class="categories">
-            <img src="./assets/images/icon-js.svg" class="landing-icons3" />
-            <p class="categories-titles">Javascript</p>
-          </div>
-          <div class="categories">
-            <img
-              src="./assets/images/icon-accessibility.svg"
-              class="landing-icons4"
-            />
-            <p class="categories-titles">Accessibility</p>
-          </div>
+          <a class="category-link">
+            <div class="categories">
+              <img src="./assets/images/icon-html.svg" class="landing-icons1" />
+              <p class="categories-titles">HTML</p>
+            </div>
+          </a>
+          <a class="category-link">
+            <div class="categories">
+              <img src="./assets/images/icon-css.svg" class="landing-icons2" />
+              <p class="categories-titles">CSS</p>
+            </div>
+          </a>
+          <a class="category-link">
+            <div class="categories">
+              <img src="./assets/images/icon-js.svg" class="landing-icons3" />
+              <p class="categories-titles">Javascript</p>
+            </div>
+          </a>
+          <a class="category-link">
+            <div class="categories">
+              <img
+                src="./assets/images/icon-accessibility.svg"
+                class="landing-icons4"
+              />
+              <p class="categories-titles">Accessibility</p>
+            </div>
+          </a>
         </div>
       </div>
+      <!-- category selection portion ENDS here  -->
     </div>
 
     <script src="./js/index.js"></script>

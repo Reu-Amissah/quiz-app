@@ -53,6 +53,7 @@ body {
     justify-content: end;
     align-items: center;
     gap: 16px;
+    cursor: pointer;
     .mode-icons {
       width: 24px;
       height: 24px;
@@ -107,6 +108,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    a {
+      text-decoration: none;
+    }
     .categories {
       width: 564px;
       background-color: var(--main-bg);
@@ -137,6 +141,9 @@ body {
         font-size: 28px;
         font-weight: 500;
         line-height: 100%;
+        :link {
+          text-decoration: none;
+        }
       }
     }
     .categories .landing-icons2 {

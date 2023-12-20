@@ -50,6 +50,7 @@ body {
   justify-content: end;
   align-items: center;
   gap: 16px;
+  cursor: pointer;
 }
 .parent-component .mode-container .mode-icons {
   width: 24px;
@@ -102,6 +103,9 @@ body {
   flex-direction: column;
   gap: 24px;
 }
+.landing-body .side-categories a {
+  text-decoration: none;
+}
 .landing-body .side-categories .categories {
   width: 564px;
   background-color: var(--main-bg);
@@ -132,6 +136,9 @@ body {
   font-size: 28px;
   font-weight: 500;
   line-height: 100%;
+}
+.landing-body .side-categories .categories .categories-titles :link {
+  text-decoration: none;
 }
 .landing-body .side-categories .categories .landing-icons2 {
   width: 40px;
