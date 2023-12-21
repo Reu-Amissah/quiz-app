@@ -81,7 +81,7 @@ body {
 
 .parent-component {
   width: 80%;
-  margin-top: 60px;
+  margin-top: 40px;
 }
 .parent-component .mode-container {
   display: flex;
@@ -109,7 +109,7 @@ body {
 }
 
 .question-main-body {
-  margin-top: 80px;
+  margin-top: 70px;
   display: flex;
   justify-content: space-between;
 }
@@ -373,6 +373,17 @@ body {
   line-height: 150%;
   margin-top: 16px;
   color: var(--secondary-text);
+}
+
+.error-message-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ee5454;
+  justify-content: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
 }
 
 @media (max-width: 1024px) {

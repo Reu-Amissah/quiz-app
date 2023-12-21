@@ -82,7 +82,7 @@ body {
 // dark mode toggle component here
 .parent-component {
   width: 80%;
-  margin-top: 60px;
+  margin-top: 40px;
   .mode-container {
     display: flex;
     justify-content: end;
@@ -112,7 +112,7 @@ body {
 // dark mode component ends here
 
 .question-main-body {
-  margin-top: 80px;
+  margin-top: 70px;
   display: flex;
   justify-content: space-between;
   .question-container {
@@ -386,6 +386,17 @@ $breakpoint-tablet: 1024px;
   line-height: 150%;
   margin-top: 16px;
   color: var(--secondary-text);
+}
+
+.error-message-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ee5454;
+  justify-content: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
 }
 
 $breakpoint-tablet: 1024px;

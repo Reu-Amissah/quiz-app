@@ -244,7 +244,8 @@ function showScore() {
 
   const logoTitle = document.createElement("p");
   logoTitle.classList.add("categories-title");
-  logoTitle.innerHTML = localStorage.getItem("selectedCategory") || "NoTitle";
+  const category = localStorage.getItem("selectedCategory") || "NoTitle";
+  logoTitle.innerHTML = category.charAt(0).toUpperCase() + category.slice(1);
   title.appendChild(logoTitle);
 
   resultContainer.appendChild(title!);
@@ -347,21 +348,78 @@ function showQuestion(questions: Quiz) {
 }
 
 function handleSubmit() {
-  if (!isAnswerSelect) {
-    alert("Please select an option before submitting.");
+  if (!isAnswerSelect && !document.querySelector(".error-message-container")) {
+    let errorContainer = document.createElement("div");
+    errorContainer.classList.add("error-message-container");
+    let errorIcon = document.createElement("img");
+    errorIcon.src = "./assets/images/icon-error.svg";
+    errorIcon.style.height = "40px";
+    errorIcon.style.width = "40px";
+    let errorMsg = document.createElement("p");
+    errorMsg.innerHTML = "Please select an answer";
+    errorContainer?.appendChild(errorIcon);
+    errorContainer?.appendChild(errorMsg);
+    questionOptns?.appendChild(errorContainer);
+    return;
+  } else if (
+    !isAnswerSelect &&
+    document.querySelector(".error-message-container")
+  ) {
+    if (questionOptns && questionOptns.lastChild) {
+      questionOptns.removeChild(questionOptns.lastChild);
+    }
+
+    let errorContainer = document.createElement("div");
+    errorContainer.classList.add("error-message-container");
+    let errorIcon = document.createElement("img");
+    errorIcon.src = "./assets/images/icon-error.svg";
+    errorIcon.style.height = "40px";
+    errorIcon.style.width = "40px";
+    let errorMsg = document.createElement("p");
+    errorMsg.innerHTML = "Please select an answer";
+    errorContainer?.appendChild(errorIcon);
+    errorContainer?.appendChild(errorMsg);
+    questionOptns?.appendChild(errorContainer);
     return;
   }
+
+  let correctImg = document.createElement("img");
+  correctImg.src = "./assets/images/icon-correct.svg";
+  correctImg.style.marginLeft = "auto";
+  let incorrectImg = document.createElement("img");
+  incorrectImg.src = "./assets/images/icon-incorrect.svg";
+  incorrectImg.style.marginLeft = "auto";
 
   Array.from(questionOptns!.children).forEach((option) => {
     if (option instanceof HTMLElement) {
       option.removeEventListener("click", selectAnswer);
       if (option.dataset.correct === "true") {
         option.style.border = "3px solid #26d782";
+        let letter = option.querySelector(".letter-options") as HTMLElement;
+        letter!.style.backgroundColor = "#26d782";
+        letter!.style.color = "#fff";
+
+        option.appendChild(correctImg);
       } else if (
         option.dataset.select === "true" &&
         option.dataset.correct === "false"
       ) {
         option.style.border = "3px solid #ee5454";
+        let letter = option.querySelector(".letter-options") as HTMLElement;
+        letter!.style.backgroundColor = "#ee5454";
+        letter!.style.color = "#fff";
+
+        option.appendChild(incorrectImg);
+      } else if (
+        option.dataset.select === "true" &&
+        option.dataset.correct === "true"
+      ) {
+        option.style.border = "3px solid #26d782";
+        let letter = option.querySelector(".letter-options") as HTMLElement;
+        letter!.style.backgroundColor = "#26d782";
+        letter!.style.color = "#fff";
+
+        option.appendChild(correctImg);
       }
     }
   });
@@ -391,6 +449,9 @@ function selectAnswer(e: Event) {
   if (selectedButton) {
     selectedButton.style.border = "3px solid #a729f5";
     selectedButton.dataset.select = "true";
+    let letter = selectedButton.querySelector(".letter-options") as HTMLElement;
+    letter!.style.backgroundColor = "#a729f5";
+    letter!.style.color = "#fff";
   }
 }
 
