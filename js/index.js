@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.style.backgroundImage = `url(${imageUrl})`;
             sunIcon.style.backgroundImage = `url(${sun})`;
             moonIcon.style.backgroundImage = `url(${moon})`;
+            levelContainer.style.backgroundColor = "#3b4d66";
         }
         else {
             darkModeIcon.style.justifyContent = "flex-start";
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.style.backgroundImage = "";
             sunIcon.style.backgroundImage = "";
             moonIcon.style.backgroundImage = "";
+            levelContainer.style.backgroundColor = "#fff";
         }
     }
     darkMode === null || darkMode === void 0 ? void 0 : darkMode.addEventListener("click", setDarkMode);
@@ -251,13 +253,28 @@ function resetState() {
     }
 }
 function showQuestion(questions) {
-    // resetQuestionSection();
+    resetQuestionSection();
     console.log(score);
     resetState();
     isAnswerSelect = false;
     let currentQuestion = questions.questions[currentIndexQuestion];
-    questionBody.innerHTML = currentQuestion.question;
-    questionNum.innerHTML = `Question ${currentIndexQuestion + 1} of 10`;
+    let quest = document.createElement("p");
+    quest.classList.add("question-body");
+    let questNum = document.createElement("p");
+    questNum.classList.add("question-number");
+    promptSection === null || promptSection === void 0 ? void 0 : promptSection.appendChild(questNum);
+    promptSection === null || promptSection === void 0 ? void 0 : promptSection.appendChild(quest);
+    let currentMode = localStorage.getItem("mode") || "light";
+    console.log("currentmode: ", currentMode);
+    levelContainer.style.width = "100%";
+    if (currentMode === "light") {
+        levelContainer.style.backgroundColor = "#fff";
+    }
+    else {
+        levelContainer.style.backgroundColor = "#3b4d66";
+    }
+    quest.innerHTML = currentQuestion.question;
+    questNum.innerHTML = `Question ${currentIndexQuestion + 1} of 10`;
     let letterindex = 0;
     currentQuestion.options.forEach((option) => {
         const correctAnswer = currentQuestion.answer;
