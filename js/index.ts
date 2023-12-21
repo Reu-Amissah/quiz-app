@@ -117,10 +117,6 @@ document.querySelectorAll(".category-link").forEach((link) => {
   });
 });
 
-// localStorage.setItem("currentIndexQuestion", "0");
-// let currentIndexQuestion: string | number | null =
-//   localStorage.getItem("currentIndexQuestion") | 0;
-
 let filteredCategoryQuestions: Quiz;
 async function fetchData() {
   const response = await fetch("./js/data.json");
@@ -280,7 +276,6 @@ function resetQuestionSection() {
     promptSection?.removeChild(promptSection.firstChild);
   }
   levelContainer!.style.width = "0";
-  levelContainer!.style.backgroundColor = "transparent";
 }
 
 function resetState() {
@@ -305,15 +300,7 @@ function showQuestion(questions: Quiz) {
   promptSection?.appendChild(questNum);
   promptSection?.appendChild(quest);
 
-  let currentMode: string = localStorage.getItem("mode") || "light";
-  console.log("currentmode: ", currentMode);
   levelContainer!.style.width = "100%";
-
-  if (currentMode === "light") {
-    levelContainer!.style.backgroundColor = "#fff";
-  } else {
-    levelContainer!.style.backgroundColor = "#3b4d66";
-  }
 
   quest!.innerHTML = currentQuestion.question;
   questNum!.innerHTML = `Question ${currentIndexQuestion + 1} of 10`;
@@ -338,8 +325,6 @@ function showQuestion(questions: Quiz) {
     categoryDiv.appendChild(questionP);
 
     questionOptns!.appendChild(categoryDiv);
-
-    // submitButton.addEventListener("click", handleSubmit);
 
     if (correctState) {
       categoryDiv.dataset.correct = "true";
@@ -413,6 +398,7 @@ function startQuiz() {
   currentIndexQuestion = 0;
   score = 0;
   width = 1;
+  level!.style.width = "10%";
   showQuestion(filteredCategoryQuestions);
 }
 

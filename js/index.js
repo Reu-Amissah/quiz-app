@@ -102,9 +102,6 @@ document.querySelectorAll(".category-link").forEach((link) => {
         }
     });
 });
-// localStorage.setItem("currentIndexQuestion", "0");
-// let currentIndexQuestion: string | number | null =
-//   localStorage.getItem("currentIndexQuestion") | 0;
 let filteredCategoryQuestions;
 function fetchData() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -245,7 +242,6 @@ function resetQuestionSection() {
         promptSection === null || promptSection === void 0 ? void 0 : promptSection.removeChild(promptSection.firstChild);
     }
     levelContainer.style.width = "0";
-    levelContainer.style.backgroundColor = "transparent";
 }
 function resetState() {
     while (questionOptns === null || questionOptns === void 0 ? void 0 : questionOptns.firstChild) {
@@ -264,15 +260,7 @@ function showQuestion(questions) {
     questNum.classList.add("question-number");
     promptSection === null || promptSection === void 0 ? void 0 : promptSection.appendChild(questNum);
     promptSection === null || promptSection === void 0 ? void 0 : promptSection.appendChild(quest);
-    let currentMode = localStorage.getItem("mode") || "light";
-    console.log("currentmode: ", currentMode);
     levelContainer.style.width = "100%";
-    if (currentMode === "light") {
-        levelContainer.style.backgroundColor = "#fff";
-    }
-    else {
-        levelContainer.style.backgroundColor = "#3b4d66";
-    }
     quest.innerHTML = currentQuestion.question;
     questNum.innerHTML = `Question ${currentIndexQuestion + 1} of 10`;
     let letterindex = 0;
@@ -291,7 +279,6 @@ function showQuestion(questions) {
         questionP.textContent = option;
         categoryDiv.appendChild(questionP);
         questionOptns.appendChild(categoryDiv);
-        // submitButton.addEventListener("click", handleSubmit);
         if (correctState) {
             categoryDiv.dataset.correct = "true";
         }
@@ -354,6 +341,7 @@ function startQuiz() {
     currentIndexQuestion = 0;
     score = 0;
     width = 1;
+    level.style.width = "10%";
     showQuestion(filteredCategoryQuestions);
 }
 fetchData().then(() => {
