@@ -157,29 +157,93 @@ function showNextQuestion() {
         showScore();
     }
 }
-// d="question-num">Question 6 of 10</p>
-//             <p class="question-body" id="question">
 let header = document.getElementById("question-num");
 let headerScore = document.getElementById("question");
 let promptSection = document.getElementById("quiz-prompt");
 let levelContainer = document.getElementById("level-span");
 function showScore() {
     resetQuestionSection();
+    resetState();
+    const questionHeaderIcon = document.getElementById("question-header-icon");
+    // handle icon and icon color here
+    if (localStorage.getItem("selectedCategory") === "html") {
+        questionHeaderIcon === null || questionHeaderIcon === void 0 ? void 0 : questionHeaderIcon.classList.add("orange");
+        questionHeaderIcon.src = "./assets/images/icon-html.svg";
+    }
+    else if (localStorage.getItem("selectedCategory") === "css") {
+        questionHeaderIcon === null || questionHeaderIcon === void 0 ? void 0 : questionHeaderIcon.classList.add("green");
+        questionHeaderIcon.src = "./assets/images/icon-css.svg";
+    }
+    else if (localStorage.getItem("selectedCategory") === "javascript") {
+        questionHeaderIcon === null || questionHeaderIcon === void 0 ? void 0 : questionHeaderIcon.classList.add("blue");
+        questionHeaderIcon.src = "./assets/images/icon-js.svg";
+    }
+    else if (localStorage.getItem("selectedCategory") === "accessibility") {
+        questionHeaderIcon === null || questionHeaderIcon === void 0 ? void 0 : questionHeaderIcon.classList.add("purple");
+        questionHeaderIcon.src = "./assets/images/icon-accessibility.svg";
+    }
     const quizStatus = document.createElement("p");
     quizStatus.className = "quiz-status";
-    quizStatus.textContent = "Quiz Completed"; // Replace with actual score
+    quizStatus.textContent = "Quiz Completed";
     const quizSecondStatus = document.createElement("p");
     quizSecondStatus.className = "quiz-second-status";
-    quizSecondStatus.textContent = "You scored..."; // Replace with additional info
+    quizSecondStatus.textContent = "You scored...";
     // Append new elements to the promptSection
     promptSection.appendChild(quizStatus);
     promptSection.appendChild(quizSecondStatus);
+    const resultContainer = document.createElement("div");
+    resultContainer.classList.add("result-container");
+    const title = document.createElement("div");
+    title.classList.add("questions-category-header");
+    const logo = document.createElement("img");
+    logo.classList.add("landings-icons");
+    logo.classList.add();
+    if (localStorage.getItem("selectedCategory") === "html") {
+        logo === null || logo === void 0 ? void 0 : logo.classList.add("orange");
+        logo.src = "./assets/images/icon-html.svg";
+    }
+    else if (localStorage.getItem("selectedCategory") === "css") {
+        logo === null || logo === void 0 ? void 0 : logo.classList.add("green");
+        logo.src = "./assets/images/icon-css.svg";
+    }
+    else if (localStorage.getItem("selectedCategory") === "javascript") {
+        logo === null || logo === void 0 ? void 0 : logo.classList.add("blue");
+        logo.src = "./assets/images/icon-js.svg";
+    }
+    else if (localStorage.getItem("selectedCategory") === "accessibility") {
+        logo === null || logo === void 0 ? void 0 : logo.classList.add("purple");
+        logo.src = "./assets/images/icon-accessibility.svg";
+    }
+    title.appendChild(logo);
+    const logoTitle = document.createElement("p");
+    logoTitle.classList.add("categories-title");
+    logoTitle.innerHTML = localStorage.getItem("selectedCategory") || "NoTitle";
+    title.appendChild(logoTitle);
+    resultContainer.appendChild(title);
+    const result = document.createElement("p");
+    result.classList.add("big-result-num");
+    result.innerHTML = `${score}`;
+    resultContainer.appendChild(result);
+    const expectedScore = document.createElement("p");
+    expectedScore.classList.add("small-result-num");
+    expectedScore.innerHTML = "out of 10";
+    resultContainer.appendChild(expectedScore);
+    questionOptns === null || questionOptns === void 0 ? void 0 : questionOptns.appendChild(resultContainer);
+    let submitButton = document.getElementById("main-button");
+    if (!submitButton) {
+        submitButton = document.createElement("div");
+        submitButton.id = "main-button";
+        submitButton.textContent = "Play Again";
+        submitButton.addEventListener("click", startQuiz);
+        questionOptns.appendChild(submitButton);
+    }
 }
 function resetQuestionSection() {
     while (promptSection === null || promptSection === void 0 ? void 0 : promptSection.firstChild) {
         promptSection === null || promptSection === void 0 ? void 0 : promptSection.removeChild(promptSection.firstChild);
     }
     levelContainer.style.width = "0";
+    levelContainer.style.backgroundColor = "transparent";
 }
 function resetState() {
     while (questionOptns === null || questionOptns === void 0 ? void 0 : questionOptns.firstChild) {
@@ -187,6 +251,7 @@ function resetState() {
     }
 }
 function showQuestion(questions) {
+    // resetQuestionSection();
     console.log(score);
     resetState();
     isAnswerSelect = false;
