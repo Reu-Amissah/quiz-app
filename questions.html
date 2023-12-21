@@ -54,15 +54,15 @@
       <!-- question with options begin here  -->
       <div class="question-main-body">
         <div class="question-container">
-          <div class="question-text-container">
+          <div class="question-text-container" id="quiz-prompt">
             <p class="question-number" id="question-num">Question 6 of 10</p>
             <p class="question-body" id="question">
               Which of these color contrast ratios defines the minimum WCAG 2.1
               Level AA requirement for normal text?
             </p>
           </div>
-          <div class="question-level-container">
-            <span class="level-indicator"></span>
+          <div class="question-level-container" id="level-span">
+            <span class="level-indicator" id="level"></span>
           </div>
         </div>
         <div class="options" id="optn">
@@ -82,8 +82,11 @@
             <span class="letter-options">D</span>
             <p class="question-options">Accessibility</p>
           </div>
+          <div class="question-content">
+            <span class="letter-options">Submit</span>
+          </div>
+          <div id="main-button">Submit</div>
         </div>
-        <button id="main-button">Submit</button>
       </div>
     </div>
 

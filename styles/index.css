@@ -43,7 +43,7 @@ body {
 
 .parent-component {
   width: 80%;
-  margin-top: 100px;
+  margin-top: 60px;
 }
 .parent-component .mode-container {
   display: flex;
@@ -160,4 +160,45 @@ body {
   padding: 8px;
   background-color: #f6e7ff;
   border-radius: 10px;
+}
+
+@media (max-width: 1024px) {
+  .parent-component {
+    width: 90%;
+    margin-top: 30px;
+    margin-inline: auto;
+  }
+  .landing-body {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .landing-body .side-header {
+    text-align: left;
+  }
+  .landing-body .side-header .small-font-italics {
+    padding-top: 0;
+    padding-top: 16px;
+  }
+  .landing-body .side-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 64px;
+    width: 100%;
+  }
+  .landing-body .side-categories a {
+    text-decoration: none;
+  }
+  .landing-body .side-categories .category-link {
+    width: 100%;
+  }
+  .landing-body .side-categories .category-link .categories {
+    box-sizing: border-box;
+    width: 100%;
+    gap: 32px;
+    padding: 12px;
+    border-radius: 24px;
+  }
 }/*# sourceMappingURL=index.css.map */

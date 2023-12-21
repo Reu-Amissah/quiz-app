@@ -129,7 +129,6 @@ async function fetchData() {
   switch (category) {
     case "html":
       filteredCategoryQuestions = Questions.quizzes[0];
-      console.log(filteredCategoryQuestions);
       break;
     case "css":
       filteredCategoryQuestions = Questions.quizzes[1];
@@ -141,7 +140,7 @@ async function fetchData() {
       filteredCategoryQuestions = Questions.quizzes[3];
       break;
     default:
-      console.log("unknown");
+      console.log("unknown category");
   }
 
   return filteredCategoryQuestions;
@@ -154,6 +153,8 @@ let button = document.getElementById("main-button");
 let questionBody = document.getElementById("question");
 let questionNum = document.getElementById("question-num");
 let questionOptns = document.getElementById("optn");
+let level = document.getElementById("level");
+let width = 1;
 
 let isAnswerSelect = false;
 
@@ -164,6 +165,8 @@ function showNextQuestion() {
     questionBody?.appendChild(questionP);
     return;
   }
+  width++;
+  level!.style.width = width + "0%";
 
   currentIndexQuestion = currentIndexQuestion + 1;
 
@@ -172,7 +175,38 @@ function showNextQuestion() {
     isAnswerSelect = false;
   } else {
     console.log(score);
+    showScore();
   }
+}
+
+// d="question-num">Question 6 of 10</p>
+//             <p class="question-body" id="question">
+let header = document.getElementById("question-num");
+let headerScore = document.getElementById("question");
+let promptSection = document.getElementById("quiz-prompt");
+let levelContainer = document.getElementById("level-span");
+
+function showScore() {
+  resetQuestionSection();
+
+  const quizStatus = document.createElement("p");
+  quizStatus.className = "quiz-status";
+  quizStatus.textContent = "Quiz Completed"; // Replace with actual score
+
+  const quizSecondStatus = document.createElement("p");
+  quizSecondStatus.className = "quiz-second-status";
+  quizSecondStatus.textContent = "You scored..."; // Replace with additional info
+
+  // Append new elements to the promptSection
+  promptSection!.appendChild(quizStatus);
+  promptSection!.appendChild(quizSecondStatus);
+}
+
+function resetQuestionSection() {
+  while (promptSection?.firstChild) {
+    promptSection?.removeChild(promptSection.firstChild);
+  }
+  levelContainer!.style.width = "0";
 }
 
 function resetState() {
@@ -182,23 +216,26 @@ function resetState() {
 }
 
 function showQuestion(questions: Quiz) {
+  console.log(score);
   resetState();
+  isAnswerSelect = false;
   let currentQuestion = questions.questions[currentIndexQuestion];
   questionBody!.innerHTML = currentQuestion.question;
   questionNum!.innerHTML = `Question ${currentIndexQuestion + 1} of 10`;
+  let letterindex = 0;
 
   currentQuestion.options.forEach((option) => {
     const correctAnswer = currentQuestion.answer;
     const correctState: boolean = correctAnswer == option;
-    console.log(correctAnswer, option, correctState);
 
     const categoryDiv = document.createElement("div");
     categoryDiv.classList.add("question-content");
 
     const letterSpan = document.createElement("span");
     letterSpan.classList.add("letter-options");
-    letterSpan.textContent = String.fromCharCode(65 + currentIndexQuestion); // ASCII 65 is 'A'
+    letterSpan.textContent = String.fromCharCode(65 + letterindex);
     categoryDiv.appendChild(letterSpan);
+    letterindex++;
 
     const questionP = document.createElement("p");
     questionP.classList.add("question-options");
@@ -207,11 +244,52 @@ function showQuestion(questions: Quiz) {
 
     questionOptns!.appendChild(categoryDiv);
 
+    // submitButton.addEventListener("click", handleSubmit);
+
     if (correctState) {
       categoryDiv.dataset.correct = "true";
+    } else {
+      categoryDiv.dataset.correct = "false";
     }
     categoryDiv.addEventListener("click", selectAnswer);
   });
+
+  let submitButton = document.getElementById("main-button");
+  if (!submitButton) {
+    submitButton = document.createElement("div");
+    submitButton.id = "main-button";
+    submitButton.textContent = "Submit";
+    questionOptns!.appendChild(submitButton);
+  }
+  submitButton.textContent = "Submit";
+  submitButton.removeEventListener("click", showNextQuestion);
+  submitButton.addEventListener("click", handleSubmit);
+}
+
+function handleSubmit() {
+  if (!isAnswerSelect) {
+    alert("Please select an option before submitting.");
+    return;
+  }
+
+  Array.from(questionOptns!.children).forEach((option) => {
+    if (option instanceof HTMLElement) {
+      option.removeEventListener("click", selectAnswer);
+      if (option.dataset.correct === "true") {
+        option.style.border = "3px solid #26d782";
+      } else if (
+        option.dataset.select === "true" &&
+        option.dataset.correct === "false"
+      ) {
+        option.style.border = "3px solid #ee5454";
+      }
+    }
+  });
+
+  const submitButton = document.getElementById("main-button");
+  submitButton!.textContent = "Next Question";
+  submitButton!.removeEventListener("click", handleSubmit);
+  submitButton!.addEventListener("click", showNextQuestion);
 }
 
 function selectAnswer(e: Event) {
@@ -219,37 +297,31 @@ function selectAnswer(e: Event) {
   const selectedButton = (e.target as HTMLElement).closest(
     ".question-content"
   ) as HTMLElement;
-  console.log(selectedButton);
-
-  const isCorrect = selectedButton!.dataset.correct === "true";
-  console.log(isCorrect);
-
-  if (isCorrect) {
-    // selectedButton!.classList.add("correct");
-    selectedButton.style.border = "3px solid #26d782";
-    score = score + 1;
-    console.log(score);
-  } else {
-    selectedButton.style.border = "3px solid #ee5454";
-  }
 
   Array.from(questionOptns!.children).forEach((option) => {
-    if (option instanceof HTMLElement && option.dataset.correct === "true") {
-      option.style.border = "3px solid #26d782";
+    if (option instanceof HTMLElement) {
+      option.style.border = "3px solid transparent";
     }
     option.removeEventListener("click", selectAnswer);
   });
+  if (selectedButton.dataset.correct === "true") {
+    score++;
+  }
+
+  if (selectedButton) {
+    selectedButton.style.border = "3px solid #a729f5";
+    selectedButton.dataset.select = "true";
+  }
 }
 
 function startQuiz() {
   currentIndexQuestion = 0;
   score = 0;
+  width = 1;
   showQuestion(filteredCategoryQuestions);
-  console.log("success");
 }
 
 fetchData().then(() => {
-  console.log(filteredCategoryQuestions);
   startQuiz();
   button?.addEventListener("click", showNextQuestion);
 });
@@ -260,7 +332,7 @@ interface Quiz {
   icon: string;
   questions: Array<{
     question: string;
-    options: Array<string>; // Note that you have 'option' in QuestionType, but 'options' seems more appropriate
+    options: Array<string>;
     answer: string;
   }>;
 }

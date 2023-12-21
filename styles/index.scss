@@ -47,7 +47,7 @@ body {
 // dark mode toggle component here
 .parent-component {
   width: 80%;
-  margin-top: 100px;
+  margin-top: 60px;
   .mode-container {
     display: flex;
     justify-content: end;
@@ -170,3 +170,48 @@ body {
   }
 }
 // body component ends here
+
+$breakpoint-tablet: 1024px;
+@media (max-width: $breakpoint-tablet) {
+  .parent-component {
+    width: 90%;
+    margin-top: 30px;
+    margin-inline: auto;
+  }
+  // dark mode component ends here
+
+  // body component begins here
+  .landing-body {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .side-header {
+      text-align: left;
+      .small-font-italics {
+        padding-top: 0;
+        padding-top: 16px;
+      }
+    }
+    .side-categories {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 64px;
+      width: 100%;
+      a {
+        text-decoration: none;
+      }
+      .category-link {
+        width: 100%;
+        .categories {
+          box-sizing: border-box;
+          width: 100%;
+          gap: 32px;
+          padding: 12px;
+          border-radius: 24px;
+        }
+      }
+    }
+  }
+}
