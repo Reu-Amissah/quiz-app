@@ -76,32 +76,38 @@ document.addEventListener("DOMContentLoaded", () => {
 // dark mode logic ENDS here
 // when selectedCategory;
 document.querySelectorAll(".category-link").forEach((link) => {
-    link.addEventListener("click", function (event) {
-        var _a, _b;
-        const categoryTarget = event.currentTarget;
-        const categoryTitle = (_b = (_a = categoryTarget
-            .querySelector(".categories-titles")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.toLowerCase();
-        if (categoryTitle) {
-            categoryTarget.href = `./questions.html?category=${categoryTitle}`;
-        }
-        switch (categoryTitle) {
-            case "html":
-                localStorage.setItem("selectedCategory", "html");
-                break;
-            case "css":
-                localStorage.setItem("selectedCategory", "css");
-                break;
-            case "javascript":
-                localStorage.setItem("selectedCategory", "javascript");
-                break;
-            case "accessibility":
-                localStorage.setItem("selectedCategory", "accessibility");
-                break;
-            default:
-                localStorage.setItem("selectedCategory", "unknown");
-        }
+    link.addEventListener("click", navigateCategory);
+});
+document.querySelectorAll(".category-link").forEach((link) => {
+    link.addEventListener("keydown", function (event) {
+        navigateCategory(event);
     });
 });
+function navigateCategory(event) {
+    var _a, _b;
+    const categoryTarget = event.currentTarget;
+    const categoryTitle = (_b = (_a = categoryTarget
+        .querySelector(".categories-titles")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.toLowerCase();
+    if (categoryTitle) {
+        categoryTarget.href = `./questions.html?category=${categoryTitle}`;
+    }
+    switch (categoryTitle) {
+        case "html":
+            localStorage.setItem("selectedCategory", "html");
+            break;
+        case "css":
+            localStorage.setItem("selectedCategory", "css");
+            break;
+        case "javascript":
+            localStorage.setItem("selectedCategory", "javascript");
+            break;
+        case "accessibility":
+            localStorage.setItem("selectedCategory", "accessibility");
+            break;
+        default:
+            localStorage.setItem("selectedCategory", "unknown");
+    }
+}
 let filteredCategoryQuestions;
 function fetchData() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -152,7 +158,6 @@ function showNextQuestion() {
         isAnswerSelect = false;
     }
     else {
-        console.log(score);
         showScore();
     }
 }
@@ -251,7 +256,6 @@ function resetState() {
 }
 function showQuestion(questions) {
     resetQuestionSection();
-    console.log(score);
     resetState();
     isAnswerSelect = false;
     let currentQuestion = questions.questions[currentIndexQuestion];
@@ -270,6 +274,7 @@ function showQuestion(questions) {
         const correctState = correctAnswer == option;
         const categoryDiv = document.createElement("div");
         categoryDiv.classList.add("question-content");
+        categoryDiv.tabIndex = 0;
         const letterSpan = document.createElement("span");
         letterSpan.classList.add("letter-options");
         letterSpan.textContent = String.fromCharCode(65 + letterindex);
@@ -296,6 +301,7 @@ function showQuestion(questions) {
         questionOptns.appendChild(submitButton);
     }
     submitButton.textContent = "Submit";
+    submitButton.tabIndex = 0;
     submitButton.removeEventListener("click", showNextQuestion);
     submitButton.addEventListener("click", handleSubmit);
 }

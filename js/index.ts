@@ -87,35 +87,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // when selectedCategory;
 document.querySelectorAll(".category-link").forEach((link) => {
-  link.addEventListener("click", function (event) {
-    const categoryTarget = event.currentTarget as HTMLAnchorElement;
-    const categoryTitle = categoryTarget
-      .querySelector(".categories-titles")
-      ?.textContent?.toLowerCase();
+  link.addEventListener("click", navigateCategory);
+});
 
-    if (categoryTitle) {
-      categoryTarget.href = `./questions.html?category=${categoryTitle}`;
-    }
-
-    switch (categoryTitle) {
-      case "html":
-        localStorage.setItem("selectedCategory", "html");
-
-        break;
-      case "css":
-        localStorage.setItem("selectedCategory", "css");
-        break;
-      case "javascript":
-        localStorage.setItem("selectedCategory", "javascript");
-        break;
-      case "accessibility":
-        localStorage.setItem("selectedCategory", "accessibility");
-        break;
-      default:
-        localStorage.setItem("selectedCategory", "unknown");
-    }
+document.querySelectorAll(".category-link").forEach((link) => {
+  link.addEventListener("keydown", function (event) {
+    navigateCategory(event);
   });
 });
+
+function navigateCategory(event: Event | KeyboardEvent) {
+  const categoryTarget = event.currentTarget as HTMLAnchorElement;
+  const categoryTitle = categoryTarget
+    .querySelector(".categories-titles")
+    ?.textContent?.toLowerCase();
+
+  if (categoryTitle) {
+    categoryTarget.href = `./questions.html?category=${categoryTitle}`;
+  }
+
+  switch (categoryTitle) {
+    case "html":
+      localStorage.setItem("selectedCategory", "html");
+
+      break;
+    case "css":
+      localStorage.setItem("selectedCategory", "css");
+      break;
+    case "javascript":
+      localStorage.setItem("selectedCategory", "javascript");
+      break;
+    case "accessibility":
+      localStorage.setItem("selectedCategory", "accessibility");
+      break;
+    default:
+      localStorage.setItem("selectedCategory", "unknown");
+  }
+}
 
 let filteredCategoryQuestions: Quiz;
 async function fetchData() {
@@ -172,7 +180,6 @@ function showNextQuestion() {
     showQuestion(filteredCategoryQuestions);
     isAnswerSelect = false;
   } else {
-    console.log(score);
     showScore();
   }
 }
@@ -287,7 +294,6 @@ function resetState() {
 
 function showQuestion(questions: Quiz) {
   resetQuestionSection();
-  console.log(score);
   resetState();
   isAnswerSelect = false;
 
@@ -313,6 +319,7 @@ function showQuestion(questions: Quiz) {
 
     const categoryDiv = document.createElement("div");
     categoryDiv.classList.add("question-content");
+    categoryDiv.tabIndex = 0;
 
     const letterSpan = document.createElement("span");
     letterSpan.classList.add("letter-options");
@@ -343,6 +350,7 @@ function showQuestion(questions: Quiz) {
     questionOptns!.appendChild(submitButton);
   }
   submitButton.textContent = "Submit";
+  submitButton.tabIndex = 0;
   submitButton.removeEventListener("click", showNextQuestion);
   submitButton.addEventListener("click", handleSubmit);
 }
