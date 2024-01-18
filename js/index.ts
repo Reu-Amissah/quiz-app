@@ -10,6 +10,16 @@ interface QuestionType {
   }>;
 }
 
+interface Quiz {
+  title: string;
+  icon: string;
+  questions: Array<{
+    question: string;
+    options: Array<string>;
+    answer: string;
+  }>;
+}
+
 let Questions: QuestionType = { quizzes: [] };
 
 // dark mode settings here
@@ -476,13 +486,3 @@ fetchData().then(() => {
   button?.addEventListener("click", showNextQuestion);
 });
 // question loading function going on above
-
-interface Quiz {
-  title: string;
-  icon: string;
-  questions: Array<{
-    question: string;
-    options: Array<string>;
-    answer: string;
-  }>;
-}

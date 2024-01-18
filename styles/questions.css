@@ -144,7 +144,8 @@ body {
   width: 100%;
   border-radius: 999px;
   display: flex;
-  margin-bottom: 50px;
+  margin-bottom: 130px;
+  margin-bottom: 200px;
 }
 .question-main-body .question-container .question-level-container .level-indicator {
   width: 10%;
