@@ -20,6 +20,12 @@ interface Quiz {
   }>;
 }
 
+interface Questions {
+  question: string;
+  options: Array<string>;
+  answer: string;
+}
+
 let Questions: QuestionType = { quizzes: [] };
 
 // dark mode settings here
@@ -134,6 +140,17 @@ function navigateCategory(event: Event | KeyboardEvent) {
       localStorage.setItem("selectedCategory", "unknown");
   }
 }
+
+// function getRandomQuestions(): Quiz[] {
+//   let questionsCopy = [...filteredCategoryQuestions.questions];
+//   let randomQuestions: qu[] = [];
+//   for (let i = 0; i < 5; i++) {
+//     let index = Math.floor(Math.random() * questionsCopy.length);
+//     randomQuestions.push(questionsCopy[index]);
+//     questionsCopy.splice(index, 1);
+//   }
+//   return randomQuestions;
+// }
 
 let filteredCategoryQuestions: Quiz;
 async function fetchData() {
@@ -350,6 +367,7 @@ function showQuestion(questions: Quiz) {
       categoryDiv.dataset.correct = "false";
     }
     categoryDiv.addEventListener("click", selectAnswer);
+    // so when we click an option, it should select and remove click event
   });
 
   let submitButton = document.getElementById("main-button");
@@ -363,6 +381,19 @@ function showQuestion(questions: Quiz) {
   submitButton.tabIndex = 0;
   submitButton.removeEventListener("click", showNextQuestion);
   submitButton.addEventListener("click", handleSubmit);
+
+  let errorContainer = document.createElement("div");
+  errorContainer.classList.add("error-message-container");
+  let errorIcon = document.createElement("img");
+  errorIcon.src = "./assets/images/icon-error.svg";
+  errorIcon.style.height = "40px";
+  errorIcon.style.width = "40px";
+  let errorMsg = document.createElement("p");
+  errorMsg.innerHTML = "Please select an answer";
+  errorContainer?.appendChild(errorIcon);
+  errorContainer?.appendChild(errorMsg);
+  errorContainer!.style.visibility = "hidden";
+  questionOptns?.appendChild(errorContainer);
 }
 
 function handleSubmit() {
@@ -448,29 +479,43 @@ function handleSubmit() {
   submitButton!.addEventListener("click", showNextQuestion);
 }
 
+function resetSelection() {
+  Array.from(questionOptns!.children).forEach((option) => {
+    if (option instanceof HTMLElement) {
+      option.dataset.select = "false";
+      option.style.border = "3px solid transparent";
+    }
+  });
+  let letters = document.querySelectorAll(".letter-options");
+  console.log(letters);
+  letters!.forEach((letter: Element) => {
+    (letter as HTMLElement).style.background = "#f4f6fa";
+    (letter as HTMLElement).style.color = "#626c7f";
+  });
+}
+
 function selectAnswer(e: Event) {
+  resetSelection();
   isAnswerSelect = true;
   const selectedButton = (e.target as HTMLElement).closest(
     ".question-content"
   ) as HTMLElement;
 
-  Array.from(questionOptns!.children).forEach((option) => {
-    if (option instanceof HTMLElement) {
-      option.style.border = "3px solid transparent";
-    }
-    option.removeEventListener("click", selectAnswer);
-  });
   if (selectedButton.dataset.correct === "true") {
     score++;
   }
 
-  if (selectedButton) {
-    selectedButton.style.border = "3px solid #a729f5";
-    selectedButton.dataset.select = "true";
-    let letter = selectedButton.querySelector(".letter-options") as HTMLElement;
-    letter!.style.backgroundColor = "#a729f5";
-    letter!.style.color = "#fff";
-  }
+  console.log(selectedButton);
+
+  selectedButton.style.border = "3px solid #a729f5";
+  selectedButton.dataset.select = "true";
+  let letter = selectedButton.querySelector(".letter-options") as HTMLElement;
+  letter!.style.backgroundColor = "#a729f5";
+  letter!.style.color = "#fff";
+
+  selectedButton.addEventListener("click", selectAnswer);
+  // if (selectedButton) {
+  // }
 }
 
 function startQuiz() {
